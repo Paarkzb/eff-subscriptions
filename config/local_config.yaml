@@ -1,0 +1,14 @@
+env: "local"
+postgresDB:
+  host: "subscriptions-postgres"
+  port: 5432
+  username: "subscription"
+  password: "subscription"
+  dbname: "subscriptions"
+  sslmode: "disable"
+  maxOpenConns: 25
+  maxIdleConns: 25
+  maxIdleTime: 15s
+http:
+  port: 8080
+  timeout: 5s

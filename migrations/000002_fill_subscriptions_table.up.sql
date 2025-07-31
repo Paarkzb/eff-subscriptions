@@ -1,0 +1,10 @@
+INSERT INTO subscriptions(service_name, price, user_id, start_date, end_date) VALUES ('test0', 100, '8f7413b3-6585-4eb0-87dd-a961d13a57ac', '2025-01-01', null);
+INSERT INTO subscriptions(service_name, price, user_id, start_date, end_date) VALUES ('test1', 200, '3a648c12-e8f2-4655-aa38-596dfa896fe2', '2025-02-01', null);
+INSERT INTO subscriptions(service_name, price, user_id, start_date, end_date) VALUES ('test2', 300, 'cc73a54c-021b-4585-9ba4-f0db6aa14f25', '2025-03-01', '2025-04-01');
+INSERT INTO subscriptions(service_name, price, user_id, start_date, end_date) VALUES ('test0', 400, '8f7413b3-6585-4eb0-87dd-a961d13a57ac', '2025-04-01', null);
+INSERT INTO subscriptions(service_name, price, user_id, start_date, end_date) VALUES ('test2', 500, '8f7413b3-6585-4eb0-87dd-a961d13a57ac', '2025-05-01', null);
+INSERT INTO subscriptions(service_name, price, user_id, start_date, end_date) VALUES ('test2', 600, '8f7413b3-6585-4eb0-87dd-a961d13a57ac', '2025-06-01', null);
+INSERT INTO subscriptions(service_name, price, user_id, start_date, end_date) VALUES ('test0', 700, '3a648c12-e8f2-4655-aa38-596dfa896fe2', '2025-07-01', '2025-08-01');
+INSERT INTO subscriptions(service_name, price, user_id, start_date, end_date) VALUES ('test1', 800, 'cc73a54c-021b-4585-9ba4-f0db6aa14f25', '2025-08-01', null);
+INSERT INTO subscriptions(service_name, price, user_id, start_date, end_date) VALUES ('test1', 900, '3a648c12-e8f2-4655-aa38-596dfa896fe2', '2025-09-01', '2025-10-01');
+INSERT INTO subscriptions(service_name, price, user_id, start_date, end_date) VALUES ('test1', 999, 'cc73a54c-021b-4585-9ba4-f0db6aa14f25', '2025-10-01', null);

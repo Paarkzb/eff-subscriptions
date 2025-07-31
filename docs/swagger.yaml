@@ -1,0 +1,342 @@
+basePath: /
+definitions:
+  http.errorResponse:
+    description: error message
+    properties:
+      error: {}
+    type: object
+  models.CreateSubscriptionRequest:
+    description: subscription
+    properties:
+      end_date:
+        type: string
+      price:
+        type: integer
+      service_name:
+        type: string
+      start_date:
+        type: string
+      user_id:
+        type: string
+    type: object
+  models.DataResponse:
+    properties:
+      data: {}
+    type: object
+  models.Metadata:
+    properties:
+      current_page:
+        type: integer
+      first_page:
+        type: integer
+      last_page:
+        type: integer
+      page_size:
+        type: integer
+      total_records:
+        type: integer
+    type: object
+  models.Subscription:
+    properties:
+      end_date:
+        type: string
+      id:
+        type: integer
+      price:
+        type: integer
+      service_name:
+        type: string
+      start_date:
+        type: string
+      user_id:
+        type: string
+      version:
+        type: integer
+    type: object
+  models.SubscriptionResponse:
+    description: subscription
+    properties:
+      subscription:
+        $ref: '#/definitions/models.Subscription'
+    type: object
+  models.SubscriptionsListResponse:
+    description: subscription list with metadata for pagination
+    properties:
+      metadata:
+        $ref: '#/definitions/models.Metadata'
+      subscriptions:
+        items:
+          $ref: '#/definitions/models.Subscription'
+        type: array
+    type: object
+  models.UpdateSubscriptionRequest:
+    description: update subscription struct
+    properties:
+      end_date:
+        type: string
+      price:
+        type: integer
+      service_name:
+        type: string
+      start_date:
+        type: string
+      user_id:
+        type: string
+    type: object
+host: localhost:8180
+info:
+  contact: {}
+  description: API server for subscription application.
+  title: eff-subscriptions
+  version: "1.0"
+paths:
+  /v1/subscriptions:
+    get:
+      consumes:
+      - application/json
+      description: Return subscriptions list with pagination and search
+      parameters:
+      - description: service name
+        in: query
+        name: service_name
+        type: string
+      - description: price
+        in: query
+        name: price
+        type: integer
+      - description: user id
+        in: query
+        name: user_id
+        type: string
+      - description: start date
+        in: query
+        name: start_date
+        type: string
+      - description: page number
+        in: query
+        name: page
+        type: integer
+      - description: items limit on page
+        in: query
+        name: page_size
+        type: integer
+      - default: id
+        description: sort field
+        enum:
+        - id
+        - service_name
+        - price
+        - start_date
+        - -id
+        - -service_name
+        - -year
+        - -price
+        - -start_date
+        in: query
+        name: sort
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.SubscriptionsListResponse'
+        "422":
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/http.errorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/http.errorResponse'
+      summary: Subscriptions list
+      tags:
+      - subscriptions
+    post:
+      consumes:
+      - application/json
+      description: Create a new subscription with the input payload
+      parameters:
+      - description: Subscription object
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/models.CreateSubscriptionRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/models.SubscriptionResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/http.errorResponse'
+        "422":
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/http.errorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/http.errorResponse'
+      summary: Create a new subscription
+      tags:
+      - subscriptions
+  /v1/subscriptions/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete subscription by id
+      parameters:
+      - description: ID subscription
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.DataResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/http.errorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/http.errorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/http.errorResponse'
+      summary: Delete subscription
+      tags:
+      - subscriptions
+    get:
+      consumes:
+      - application/json
+      description: Return subscription by id
+      parameters:
+      - description: ID subscription
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.SubscriptionResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/http.errorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/http.errorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/http.errorResponse'
+      summary: Get subscription
+      tags:
+      - subscriptions
+    patch:
+      consumes:
+      - application/json
+      description: Update subscription by id
+      parameters:
+      - description: ID subscription
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: New data
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/models.UpdateSubscriptionRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.SubscriptionResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/http.errorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/http.errorResponse'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/http.errorResponse'
+        "422":
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/http.errorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/http.errorResponse'
+      summary: Update subscription
+      tags:
+      - subscriptions
+  /v1/sum-subscriptions-price:
+    get:
+      consumes:
+      - application/json
+      description: Sums up subscription prices over a date range
+      parameters:
+      - description: service name
+        in: query
+        name: service_name
+        type: string
+      - description: user id
+        in: query
+        name: user_id
+        type: string
+      - description: start date
+        in: query
+        name: start_date
+        required: true
+        type: string
+      - description: end date
+        in: query
+        name: end_date
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.DataResponse'
+        "422":
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/http.errorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/http.errorResponse'
+      summary: Sums up subscriptions prices
+      tags:
+      - subscriptions
+swagger: "2.0"
